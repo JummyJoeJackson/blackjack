@@ -1,10 +1,17 @@
-#importing functions
+#imports random function
 from random import randrange
 
-#assign all possible card suits and values
+#declares global variables
 cardSuits = ["Spades","Clubs","Diamonds","Hearts"]
 cardValues = ["2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace",]
+user_hand = []
 
-#gives user a random card
-user_card = cardValues[randrange(0,12)] + " of " + cardSuits[randrange(0,3)]
-print(user_card)
+#defines hit function
+def hit():
+    user_card = cardValues[randrange(0,12)] + " of " + cardSuits[randrange(0,3)]
+    user_hand.append(user_card)
+
+#executes hit funciton to give user their hand
+for i in range(2):
+    hit()
+print("Your hand is " + user_hand[0] + " and " + user_hand[1])
