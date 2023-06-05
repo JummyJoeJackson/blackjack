@@ -9,6 +9,7 @@ user_card = "123"
 #function for assigning user a card
 def first_card():
 	user_card = str(cardValues[randrange(0,12)]) + " of " + str(cardSuits[randrange(0,3)])
+    return user_card
 			  
 first_card()
-print(user_card)
+print(first_card())
