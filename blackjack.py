@@ -15,10 +15,10 @@ def hit(player):
     player.append(card)
 
 #defines function to give user their hand
-def starting_cards():
+def starting_cards(player):
     for i in range(2):
-        hit(user_hand)
-    print("Your hand is " + user_hand[0] + " and " + user_hand[1])
+        hit(player)
+    print("The hand is " + player[0] + " and " + player[1])
 
 #defines function to check user's card's value
 def check_card_val(position, player):
@@ -26,21 +26,26 @@ def check_card_val(position, player):
     global comp_hand_val
     for i in range(9):
         if str(i + 2) in player[position]:
-            user_hand_val = user_hand_val + (i + 2)
-            print("This user's first card is worth " + str(i + 2))
-            break
+            if player == user_hand:
+                user_hand_val = user_hand_val + (i + 2)
+                print("This card is worth " + str(i + 2))
+                break
+            elif player == comp_hand:
+                comp_hand_val = comp_hand_val + (i + 2)
+                print("This card is worth " + str(i + 2))
+                break
     if "Jack" in player[position]:
         user_hand_val = user_hand_val + 10
-        print("This user's first card is worth 10")
+        print("This card is worth 10")
     elif "Queen" in player[position]:
         user_hand_val = user_hand_val + 10
-        print("This user's first card is worth 10")
+        print("This card is worth 10")
     elif "King" in player[position]:
         user_hand_val = user_hand_val + 10
-        print("This user's first card is worth 10")
+        print("This card is worth 10")
     elif "Ace" in player[position]:
         user_hand_val = user_hand_val + 11
-        print("This user's first card is worth 11")
+        print("This card is worth 11")
 
 #defines function to check and print user's total hand value
 def check_hand_val():
@@ -53,7 +58,7 @@ def check_hand_val():
         print("YOUR HAND IS WORTH " + str(user_hand_val))
 
 #executes commands
-starting_cards()
+starting_cards(user_hand)
 check_card_val(0, user_hand)
 check_card_val(1, user_hand)
 check_hand_val()
