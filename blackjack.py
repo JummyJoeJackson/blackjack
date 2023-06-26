@@ -42,72 +42,82 @@ def give_cards(player):
     for i in range(2):
         hit(player)
     #prints the hand of the player
-    print(f"Your hand is {player[0]} and {player[1]}")
+    if player == user:
+        print(f"Your hand is {player[0]} and {player[1]}")
+    elif player == comp:
+        print(f"The computer has a {player[0]}")
 
 #defines function to check user's card's value
 def check_card_val(position, player):
     #declares global variables so that function can change them
-    global player_val
     global user_val
     global comp_val
     #finds card name
     card = player[position].split()[0]
     #adds the card value to player value
-    player_val += CARD_VALUES_MAP[card]
-    #checks if the player is the user
     if player == user:
-        #checks if it's the first card
-        if position == 0:
-            #makes user value the same as player value
-            user_val = player_val
-            #prints how much the user's first card is worth
-            print(f"The user's first card is worth {user_val}")
-        #checks if it's the second card
-        elif position == 1:
-            #checks how much the second card is worth by subtracting the first card's value from player value and then makes that the user value
-            user_val = player_val - user_val
-            #prints how much the user's first card is worth
-            print(f"The user's second card is worth {user_val}")
-    #checks if the player is the computer
+        user_val += CARD_VALUES_MAP[card]
     elif player == comp:
+        comp_val += CARD_VALUES_MAP[card]
+    #checks if the player is the computer
+    if player == comp:
         #checks if it's the first card
         if position == 0:
-            #makes computer value the same as player value
-            comp_val = player_val
             #prints how much the computer's first card is worth
             print(f"The computer's first card is worth {comp_val}")
         #checks if it's the second card
         elif position == 1:
-            #checks how much the second card is worth by subtracting the first card's value from player value and then makes that the computer value
-            comp_val = player_val - comp_val
+            comp_val -= comp_val
             #prints how much the computer's second card is worth
             print(f"This computer's second card is worth {comp_val}")
 
 #defines function to check if user has blackjack
-def check_blackjack():
+def check_blackjack(player):
+    global user
+    global comp
     #checks if player value is 21
-    if player_val == 21:
-        print("YOU GOT A BLACKJACK!")
+    if player == user:
+        if CARD_VALUES_MAP[user[0].split()[0]] + CARD_VALUES_MAP[user[1].split()[0]] == 21:
+            print("YOU GOT A BLACKJACK!")
+    elif player == comp:
+        if CARD_VALUES_MAP[comp[0].split()[0]] + CARD_VALUES_MAP[comp[1].split()[0]] == 21:
+            print("THE COMPUTER GOT A BLACKJACK!")
 
 #defines function to check if user busted
-def check_bust():
+def check_bust(player):
+    global user
+    global comp
     #checks if player value is greater than 21
-    if player_val > 21:
-        print("YOU BUSTED!")
-        print(f"YOUR HAND IS WORTH {player_val}")
+    if player == user:
+        if CARD_VALUES_MAP[user[0].split()[0]] + CARD_VALUES_MAP[user[1].split()[0]] > 21:
+            print("YOU BUSTED!")
+            print(f"YOUR HAND IS WORTH {CARD_VALUES_MAP[user[0].split()[0]] + CARD_VALUES_MAP[user[1].split()[0]]}")
+    elif player == comp:
+        if CARD_VALUES_MAP[comp[0].split()[0]] + CARD_VALUES_MAP[comp[1].split()[0]] > 21:
+            print("YOU BUSTED!")
+            print(f"YOUR HAND IS WORTH {CARD_VALUES_MAP[comp[0].split()[0]] + CARD_VALUES_MAP[comp[1].split()[0]]}")
 
 #defines function to check and print user's hand value
-def check_hand_val():
+def check_hand_val(player):
+    global user
+    global comp
     #checks if player got blackjack
-    check_blackjack()
+    check_blackjack(player)
     #checks if player busted
-    check_bust()
+    check_bust(player)
     #checks if player value is lower than 21
-    if player_val < 21:
-        print(f"YOUR HAND IS WORTH {player_val}")
+    if player == user:
+        if CARD_VALUES_MAP[user[0].split()[0]] + CARD_VALUES_MAP[user[1].split()[0]] < 21:
+            print(f"YOUR HAND IS WORTH {CARD_VALUES_MAP[user[0].split()[0]] + CARD_VALUES_MAP[user[1].split()[0]]}")
+    elif player == comp:
+        if CARD_VALUES_MAP[comp[0].split()[0]] + CARD_VALUES_MAP[comp[1].split()[0]] < 21:
+            print(f"THE COMPUTER'S HAND IS WORTH {CARD_VALUES_MAP[comp[0].split()[0]] + CARD_VALUES_MAP[comp[1].split()[0]]}")
 
 #executes commands
 give_cards(user)
 check_card_val(0, user)
 check_card_val(1, user)
-check_hand_val()
+check_hand_val(user)
+give_cards(comp)
+check_card_val(0, comp)
+check_hand_val(comp)
