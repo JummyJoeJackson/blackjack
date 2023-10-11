@@ -121,3 +121,6 @@ check_hand_val(user)
 give_cards(comp)
 check_card_val(0, comp)
 check_hand_val(comp)
+
+
+print("Wow, that's very cool")
